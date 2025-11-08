@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard IoT ESP32</title>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🌡️ Painel de Monitoramento IoT</h1>
+
+  <div class="container">
+    <div class="card">
+      <h2>Temperatura</h2>
+      <p id="temp">-- °C</p>
+    </div>
+    <div class="card">
+      <h2>Umidade</h2>
+      <p id="hum">-- %</p>
+    </div>
+    <div class="card">
+      <h2>Luminosidade</h2>
+      <p id="luz">--</p>
+    </div>
+  </div>
+
+  <p id="status" class="status">🔴 Desconectado</p>
+
+  <script>
+    const client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
+
+    const statusEl = document.getElementById("status");
+
+    client.on("connect", () => {
+      console.log("✅ Conectado ao broker HiveMQ!");
+      statusEl.textContent = "🟢 Conectado ao broker HiveMQ!";
+      client.subscribe("esp32/temperatura");
+      client.subscribe("esp32/umidade");
+      client.subscribe("esp32/luminosidade");
+    });
+
+    client.on("message", (topic, message) => {
+      const valor = message.toString();
+      if (topic === "esp32/temperatura")
+        document.getElementById("temp").textContent = `${valor} °C`;
+      if (topic === "esp32/umidade")
+        document.getElementById("hum").textContent = `${valor} %`;
+      if (topic === "esp32/luminosidade")
+        document.getElementById("luz").textContent = valor;
+    });
+
+    client.on("error", (err) => {
+      console.error("Erro MQTT:", err);
+      statusEl.textContent = "🔴 Erro de conexão MQTT";
+    });
+
+    client.on("close", () => {
+      statusEl.textContent = "🔴 Desconectado";
+    });
+  </script>
+</body>
+</html>
