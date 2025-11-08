@@ -1,4 +1,6 @@
-Projeto de prova de conceito (PoC) que monitora temperatura, umidade e luminosidade de um ambiente usando um ESP32 (simulado no Wokwi).]
+Nomes/rm: Felipe Bernardes RM: 564360, Gabriel Juarez RM: 563680, Vinicius Ribeiro RM: 564379, Nicolas Marçal RM: 565982 e Guilherme Romero RM: 564431 
+
+Projeto de prova de conceito (PoC) que monitora temperatura, umidade e luminosidade de um ambiente usando um ESP32 (simulado no Wokwi).
 
 Objetivos:
 
@@ -58,8 +60,7 @@ Host: 54.221.163.3
 Port: 1883
 
 Username: nicolas
-
-Password: banana
+Password: banana (pode ser outras senhas)
 
 Conecte e faça subscribe nos tópicos:
 
@@ -78,5 +79,6 @@ Abra dashboard/index.html no navegador (duplo clique; ou sirva via um servidor l
 Abra console (F12 → Console) para ver logs.
 
 O dashboard tentará conectar ao HiveMQ. Se conectado, verá mensagem no console: ✅ Conectado ao broker HiveMQ!
+
 
 Valores nos cards serão atualizados em tempo real quando o ESP32 publicar nos tópicos esp32_dash/....
